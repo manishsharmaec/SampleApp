@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'manish'
+            keyPassword 'manish'
+            storeFile file('/Users/manish/Downloads/wally-master/SampleApp/app/key/key')
+            storePassword 'manish'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sampleapp.kiddopia.com.com.sampleapp"
@@ -12,30 +20,31 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.config
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.config
+            minifyEnabled false
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-
     // retrofit and KiddoLib
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.google.code.gson:gson:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
-//    implementation(name:'kiddoLib', ext:'aar')
-//    implementation 'com.kiddolib:subscription:1.0.3'
-    implementation 'com.github.manishsharmaec:LibraryKiddo:1.0.5'
 
-
+    //    implementation(name:'kiddoLib', ext:'aar')
+    //    implementation 'com.kiddolib:subscription:1.0.3'
+    implementation 'com.github.manishsharmaec:librarykiddo:1.1.0'
 }

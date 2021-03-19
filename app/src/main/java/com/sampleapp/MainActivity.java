@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.kiddolib.FetchUser;
+import com.kiddolib.RegisterApp;
+import com.kiddolib.TestClass;
+import com.kiddolib.model.MemberDetails;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         fetchUser = (Button)findViewById(R.id.fetchUser);
 
         RegisterApp.configureApp(key);
+
+        RegisterApp registerApp =    RegisterApp.singleton();
+        registerApp.init(this);
+        registerApp.configureApp(key);
         //§  Test ID1: rc.test1 (will return a valid membership)
         //§  Test ID2: rc.test2 (will return an expired membership)
         //§  Test ID2: rc.test3
@@ -77,15 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void callApi(String userID) {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Please wait, we are fetching your details");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
+
         RegisterApp.fetchMember(userID, new FetchUser() {
             @Override
             public void onSuccess(MemberDetails memberDetails) {
-                progress.dismiss();
 
                 String  membership_status=null, member_since=null,valid_till=null;
 
@@ -127,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String errorMessage) {
-                progress.dismiss();
                 Log.e("error",errorMessage);
 
             }
