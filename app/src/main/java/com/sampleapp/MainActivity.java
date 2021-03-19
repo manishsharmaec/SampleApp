@@ -15,9 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.kiddolib.FetchUser;
-import com.kiddolib.RegisterApp;
-import com.kiddolib.model.MemberDetails;
 
 
 public class MainActivity extends AppCompatActivity {
